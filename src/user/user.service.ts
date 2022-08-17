@@ -33,6 +33,13 @@ export class UserService {
     return user;
   }
 
+  async findUserByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user)
+      throw new BadRequestException(`No user found with email: ${email}`);
+    return user;
+  }
+
   async updateUserById(id: number, updateUserDto: UpdateUserDto) {
     return await this.userRepository.update(id, updateUserDto);
   }
